@@ -5,11 +5,13 @@ int main(){
 	int noOfProcess;
 	int i, at, pr, bt;
 	int t=0;
-	int waitTime=0;
+	//int waitTime=0;
 	int complete=0;
 	int minPriIndexC;
 	
 	int minPri, minPriIndex;
+	
+	
 	noOfProcess=4;
 	int arr[8][4] = {{0 ,1, 2, 3},  //process no
 					 {0 ,1 ,2 ,4},  //arr time
@@ -17,8 +19,32 @@ int main(){
 					 {5, 4, 2, 10}, //burst time
 					 {0, 0, 0, 0},  //wait time
 					 {0, 0, 0, 0},  //state 0 - idle, 1-running, (-1)-completed, 2-queue
-					 {0, 0, 0, 0},  //tat
+					 {0, 0, 0, 0},  //ct
 					 {0, 0, 0, 0}}; //wtIncPri
+	
+	
+	/*
+	printf("No of process: ");
+	scanf("%d",&noOfProcess);
+	int arr[8][noOfProcess];
+	for(i=0; i<noOfProcess; i++){
+		printf("\nFor P%d \n", i);
+		printf("Priority: ");
+		scanf("%d", &pr);
+		printf("Arrival Time: ");
+		scanf("%d", &at);
+		printf("Burst Time: ");
+		scanf("%d", &bt);
+		arr[0][i]=i;
+		arr[1][i]=at; //Arrival Time
+		arr[2][i]=pr; //Priority
+		arr[3][i]=bt; //Burst Time
+		arr[4][i]=0;  //Wait Time
+		arr[5][i]=0;  //State
+		arr[6][i]=0;  //Turn Around Time
+		arr[7][i]=0;  //WaitTime to incriment Priority
+	}
+	*/
 	
 	//Saving the burst time of each process.
 	int burstTime[noOfProcess];
@@ -45,9 +71,9 @@ int main(){
 		
 			
 		t++;  
-		minPri = 100;
+		minPri = 100000;
 		minPriIndex = 0;
-		///Finding the minimum priority
+		//Finding the minimum priority
 		for(i=0; i<noOfProcess; i++){
 			if(arr[2][i]<minPri&&arr[5][i]==2){
 				minPriIndex = i;
@@ -134,15 +160,20 @@ int main(){
 		printf("%d\t", arr[2][i]);
 	}
 	
-	
+	/*
 	printf("\nBT:\t");
 	for(i=0; i<noOfProcess; i++){
 		printf("%d\t", arr[3][i]);
 	}
+	*/
+	printf("\nBT:\t");
+	for(i=0; i<noOfProcess; i++){
+		printf("%d\t", burstTime[i]);
+	}
 	
 	printf("\nWT:\t");
 	for(i=0; i<noOfProcess; i++){
-		printf("%d\t", arr[6][i]-burstTime[i]);
+		printf("%d\t", (arr[6][i]-arr[1][i])-burstTime[i]);
 	}
 	
 	printf("\nState:\t");
@@ -150,9 +181,14 @@ int main(){
 		printf("%d\t", arr[5][i]);
 	}
 	
-	printf("\nTAT:\t");
+	printf("\nCT:\t");
 	for(i=0; i<noOfProcess; i++){
 		printf("%d\t", arr[6][i]);
+	}
+	
+	printf("\nTAT:\t");
+	for(i=0; i<noOfProcess; i++){
+		printf("%d\t", arr[6][i]-arr[1][i]);
 	}
 	
 	printf("\nWIP:\t");
